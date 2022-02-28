@@ -1,5 +1,11 @@
+import Header from "./Header";
+import MemeGenerator from "./MemeGenerator";
+
 export default function App() {
   return (
-    <div>Hello world</div>
-  )
+    <div className="main">
+      <Header />
+      <MemeGenerator />
+    </div>
+  );
 }
