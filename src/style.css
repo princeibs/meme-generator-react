@@ -28,11 +28,11 @@ li {
 }
 
 .header .content-title {
-  font-size: 28px;
-  font-weight: 200px;
+  font-size: 38px;
+  font-weight: 100px;
   margin-right: auto;
-  letter-spacing: -2px;
-  font-family: cursive;
+  letter-spacing: 2px;
+  font-family: fantasy;
 }
 
 .header ul {
