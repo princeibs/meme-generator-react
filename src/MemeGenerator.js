@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-// import data from "./memesData";
 
 export default function MemeGenerator() {
   const [allMemeImages, setAllMemeImages] = useState([]);
   const [prevMemeImages, setPrevMemeImages] = useState([]);
+  const [memeTextSize, setMemeTextSize] = useState(40);
   const [meme, setMeme] = useState({
     topText: "",
     bottomText: "",
@@ -22,7 +22,7 @@ export default function MemeGenerator() {
   const getNewMeme = () => {
     const randomId = Math.floor(Math.random() * allMemeImages.length);
     const url = allMemeImages[randomId].url;
-    setPrevMemeImages(prevMemeImages => [...prevMemeImages, meme])    
+    setPrevMemeImages((prevMemeImages) => [...prevMemeImages, meme]);
     setMeme((prevMeme) => ({
       ...prevMeme,
       url,
@@ -31,7 +31,7 @@ export default function MemeGenerator() {
 
   function getPrevMeme() {
     const prevMeme = prevMemeImages.pop();
-    const url = prevMeme.url;        
+    const url = prevMeme.url;
     setMeme((currentMeme) => ({
       ...currentMeme,
       url,
@@ -47,6 +47,12 @@ export default function MemeGenerator() {
       };
     });
   }
+
+  function handleChangeTextSize(event) {
+    const memeTextSize = event.target.value;
+    setMemeTextSize(parseInt(memeTextSize));
+  }
+
   return (
     <div className="content-body">
       <div className="input-group">
@@ -66,7 +72,11 @@ export default function MemeGenerator() {
         />
       </div>
       <div className="btn-group">
-        <button className="btn-prev" disabled={!prevMemeImages.length} onClick={getPrevMeme}>
+        <button
+          className="btn-prev"
+          disabled={!prevMemeImages.length}
+          onClick={getPrevMeme}
+        >
           Previous image
         </button>
         <button className="btn-next" onClick={() => getNewMeme()}>
@@ -74,9 +84,30 @@ export default function MemeGenerator() {
         </button>
       </div>
       <div className="meme-img">
-        <div className="top-text meme-text">{meme.topText}</div>
-        <div className="bottom-text meme-text">{meme.bottomText}</div>
+        <div style={{ fontSize: memeTextSize }} className="top-text meme-text">
+          {meme.topText}
+        </div>
+        <div
+          style={{ fontSize: memeTextSize }}
+          className="bottom-text meme-text"
+        >
+          {meme.bottomText}
+        </div>
         <img src={meme.url} alt={meme.name} />
+      </div>
+      <div className="controls">
+        <div className="text-size">
+          <div className="label">Text size</div>
+          <input
+            id="change-font"
+            onChange={handleChangeTextSize}
+            type="range"
+            min={1}
+            max={100}
+            defaultValue={40}
+            className="slider"
+          />
+        </div>
       </div>
     </div>
   );
