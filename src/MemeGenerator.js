@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 export default function MemeGenerator() {
   const [allMemeImages, setAllMemeImages] = useState([]);
+  const [prevMemeImages, setPrevMemeImages] = useState([]);
   const [meme, setMeme] = useState({
     topText: "",
     bottomText: "",
@@ -21,11 +22,21 @@ export default function MemeGenerator() {
   const getNewMeme = () => {
     const randomId = Math.floor(Math.random() * allMemeImages.length);
     const url = allMemeImages[randomId].url;
+    setPrevMemeImages(prevMemeImages => [...prevMemeImages, meme])    
     setMeme((prevMeme) => ({
       ...prevMeme,
       url,
     }));
   };
+
+  function getPrevMeme() {
+    const prevMeme = prevMemeImages.pop();
+    const url = prevMeme.url;        
+    setMeme((currentMeme) => ({
+      ...currentMeme,
+      url,
+    }));
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -54,7 +65,14 @@ export default function MemeGenerator() {
           placeholder="Bottom text"
         />
       </div>
-      <button onClick={() => getNewMeme()}>Get a new meme image 😎</button>
+      <div className="btn-group">
+        <button className="btn-prev" disabled={!prevMemeImages.length} onClick={getPrevMeme}>
+          Previous image
+        </button>
+        <button className="btn-next" onClick={() => getNewMeme()}>
+          New random image
+        </button>
+      </div>
       <div className="meme-img">
         <div className="top-text meme-text">{meme.topText}</div>
         <div className="bottom-text meme-text">{meme.bottomText}</div>

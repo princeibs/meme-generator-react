@@ -45,14 +45,19 @@ li {
   padding: 10px;
 }
 
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 button {
   color: white;
   padding: 10px;
   border-radius: 5px;
-  font-size: 20px;
-  display: block;
-  margin: 20px auto;
-  width: 100%;
+  font-size: 15px;  
+  flex-flow: row unwrap;  
+  margin: 20px;
+  width: 40%;
   border: none;  
   cursor: pointer;
   background: linear-gradient(to right, purple, rgb(179, 137, 233));  
@@ -101,6 +106,10 @@ button img {
   color: white;
   position: absolute;
   text-shadow: 0 0 10px black; 
+}
+
+button:disabled {
+  background: lightgrey;    
 }
 
 
