@@ -1,17 +1,23 @@
-import { useState } from "react";
-import data from "./memesData";
+import React, { useState } from "react";
+// import data from "./memesData";
 
 export default function MemeGenerator() {
-  const [meme, setMeme] = useState({
+  const [allMemeImages, setAllMemeImages] = useState([])
+  const [meme, setMeme] = useState({   
     topText: "",
     bottomText: "",
     name: "Index Image",
-    url: data.memes[0].url,
+    url: "https://i.imgflip.com/30b1gx.jpg",
   });
-  const [allMemeImages, setAllMemeImages] = useState(data)
+  React.useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+    .then(res => res.json())
+    .then(data => setAllMemeImages(data.data.memes))
+  }, [])
+ 
   const getNewMeme = () => {
-    const randomId = Math.floor(Math.random() * allMemeImages.memes.length);
-    const url = allMemeImages.memes[randomId].url
+    const randomId = Math.floor(Math.random() * allMemeImages.length);
+    const url = allMemeImages[randomId].url
     setMeme(prevMeme => ({
       ...prevMeme,
       url
