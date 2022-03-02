@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import twitterIcon from "./icons/twitter-icon-blue-shadow.png";
+import uploadIcon from "./icons/upload-image.png";
 import downloadIcon from "./icons/download-icon.png";
 import * as htmlToImage from "html-to-image";
 
@@ -154,13 +154,13 @@ export default function MemeGenerator() {
           name="download"
           onClick={handleIconClick}
           src={downloadIcon}
-          alt="Share to twitter"
+          alt="Download image "
         />
         <img
           name="shareToTwitter"
           onClick={handleIconClick}
-          src={twitterIcon}
-          alt="Download"
+          src={uploadIcon}
+          alt="Upload image"
         />
       </div>
     </div>
