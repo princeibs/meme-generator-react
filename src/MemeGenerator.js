@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import twitterIcon from "./icons/twitter-icon-blue-shadow.png"
-import downloadIcon from "./icons/download-icon.png"
+import twitterIcon from "./icons/twitter-icon-blue-shadow.png";
+import downloadIcon from "./icons/download-icon.png";
+import * as htmlToImage from "html-to-image";
 
 const TEXT_MAX_LENGTH = 72;
 const OK_LENGTH = 30;
@@ -54,7 +55,6 @@ export default function MemeGenerator() {
         };
       });
     }
-
   }
 
   function handleChangeTextSize(event) {
@@ -63,10 +63,18 @@ export default function MemeGenerator() {
   }
 
   function topTextCountStyle(length) {
-    const color = length <= OK_LENGTH ? "green" :
-      length <= WARNING_LENGTH ? "yellow" :
-        "red";
-    return { borderColor: color }
+    const color =
+      length <= OK_LENGTH
+        ? "green"
+        : length <= WARNING_LENGTH
+        ? "yellow"
+        : "red";
+    return { borderColor: color };
+  }
+
+  function handleIconClick(e) {
+    const name = e.target.name;
+    if (name === "download") downloadMeme("meme-node");
   }
 
   return (
@@ -80,7 +88,10 @@ export default function MemeGenerator() {
             type="text"
             placeholder="Top text"
           />
-          <div style={topTextCountStyle(meme.topText.length)} className="char-count">
+          <div
+            style={topTextCountStyle(meme.topText.length)}
+            className="char-count"
+          >
             {TEXT_MAX_LENGTH - meme.topText.length}
           </div>
         </div>
@@ -91,9 +102,11 @@ export default function MemeGenerator() {
             onChange={handleChange}
             type="text"
             placeholder="Bottom text"
-          // disabled={meme.bottomText.length >= TEXT_MAX_LENGTH}
           />
-          <div style={topTextCountStyle(meme.bottomText.length)} className="char-count">
+          <div
+            style={topTextCountStyle(meme.bottomText.length)}
+            className="char-count"
+          >
             {TEXT_MAX_LENGTH - meme.bottomText.length}
           </div>
         </div>
@@ -110,7 +123,7 @@ export default function MemeGenerator() {
           New random image
         </button>
       </div>
-      <div className="meme-img">
+      <div id="meme-node" className="meme-img">
         <div style={{ fontSize: memeTextSize }} className="top-text meme-text">
           {meme.topText}
         </div>
@@ -137,9 +150,38 @@ export default function MemeGenerator() {
         </div>
       </div>
       <div className="icon-group">
-        <img name="shareToTwitter" src={downloadIcon} alt="Share to twitter" />
-        <img name="download" src={twitterIcon} alt="Download" />
+        <img
+          name="download"
+          onClick={handleIconClick}
+          src={downloadIcon}
+          alt="Share to twitter"
+        />
+        <img
+          name="shareToTwitter"
+          onClick={handleIconClick}
+          src={twitterIcon}
+          alt="Download"
+        />
       </div>
     </div>
   );
 }
+
+function downloadMeme(node) {
+  const targetNode = document.getElementById(node);
+  htmlToImage
+    .toPng(targetNode)
+    .then((dataUrl) => {
+      const elem = document.createElement("a");
+      elem.setAttribute("href", dataUrl);
+      elem.setAttribute("download", "new_meme_image");
+      document.body.appendChild(elem);
+      elem.click();
+      elem.remove();
+    })
+    .catch(function (error) {
+      console.error("oops, something went wrong");
+    });
+}
+
+function shareToTwitter() {}
