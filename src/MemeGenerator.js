@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const TEXT_MAX_LENGTH = 72;
+
 export default function MemeGenerator() {
   const [allMemeImages, setAllMemeImages] = useState([]);
   const [prevMemeImages, setPrevMemeImages] = useState([]);
@@ -40,12 +42,15 @@ export default function MemeGenerator() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setMeme((prevMeme) => {
-      return {
-        ...prevMeme,
-        [name]: value,
-      };
-    });
+    if (value.length <= TEXT_MAX_LENGTH) {
+      setMeme((prevMeme) => {
+        return {
+          ...prevMeme,
+          [name]: value,
+        };
+      });
+    }
+
   }
 
   function handleChangeTextSize(event) {
@@ -53,23 +58,41 @@ export default function MemeGenerator() {
     setMemeTextSize(parseInt(memeTextSize));
   }
 
+  function topTextCountStyle(length) {
+    const color = length <= 30 ? "green" :
+      length <= 50 ? "yellow" :
+        "red";
+    return { borderColor: color }
+  }
+
   return (
     <div className="content-body">
       <div className="input-group">
-        <input
-          name="topText"
-          value={meme.topText}
-          onChange={handleChange}
-          type="text"
-          placeholder="Top text"
-        />
-        <input
-          name="bottomText"
-          value={meme.bottomText}
-          onChange={handleChange}
-          type="text"
-          placeholder="Bottom text"
-        />
+        <div className="top-text-input">
+          <input
+            name="topText"
+            value={meme.topText}
+            onChange={handleChange}
+            type="text"
+            placeholder="Top text"
+          />
+          <div style={topTextCountStyle(meme.topText.length)} className="char-count">
+            {TEXT_MAX_LENGTH - meme.topText.length}
+          </div>
+        </div>
+        <div className="bottom-text-input">
+          <input
+            name="bottomText"
+            value={meme.bottomText}
+            onChange={handleChange}
+            type="text"
+            placeholder="Bottom text"
+          // disabled={meme.bottomText.length >= TEXT_MAX_LENGTH}
+          />
+          <div style={topTextCountStyle(meme.bottomText.length)} className="char-count">
+            {TEXT_MAX_LENGTH - meme.bottomText.length}
+          </div>
+        </div>
       </div>
       <div className="btn-group">
         <button
