@@ -191,6 +191,21 @@ button:disabled {
   background-color: grey;
 }
 
+.icon-group {
+  background-color: rgb(255, 254, 254) ;
+  margin-top: 15px;
+  margin-right: 33px;
+  margin-left: auto;
+  text-align: end;
+  border-radius: 5px;
+  width: 123px;  
+}
+
+.icon-group img {
+  height: 35px;  
+  margin: 7px 13px;
+}
+
 @media screen and (max-width: 500px) {
   body {
     width: 100wv;

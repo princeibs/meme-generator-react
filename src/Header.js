@@ -1,4 +1,4 @@
-import memeIcon from "./meme_icon.ico"
+import memeIcon from "./icons/meme_icon.ico"
 
 export default function Header() {
   return (

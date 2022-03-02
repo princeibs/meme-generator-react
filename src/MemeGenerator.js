@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import twitterIcon from "./icons/twitter-icon-blue-shadow.png"
+import downloadIcon from "./icons/download-icon.png"
 
 const TEXT_MAX_LENGTH = 72;
+const OK_LENGTH = 30;
+const WARNING_LENGTH = 50;
 
 export default function MemeGenerator() {
   const [allMemeImages, setAllMemeImages] = useState([]);
@@ -59,8 +63,8 @@ export default function MemeGenerator() {
   }
 
   function topTextCountStyle(length) {
-    const color = length <= 30 ? "green" :
-      length <= 50 ? "yellow" :
+    const color = length <= OK_LENGTH ? "green" :
+      length <= WARNING_LENGTH ? "yellow" :
         "red";
     return { borderColor: color }
   }
@@ -131,6 +135,10 @@ export default function MemeGenerator() {
             className="slider"
           />
         </div>
+      </div>
+      <div className="icon-group">
+        <img name="shareToTwitter" src={downloadIcon} alt="Share to twitter" />
+        <img name="download" src={twitterIcon} alt="Download" />
       </div>
     </div>
   );
