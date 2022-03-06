@@ -67,8 +67,8 @@ export default function MemeGenerator() {
       length <= OK_LENGTH
         ? "green"
         : length <= WARNING_LENGTH
-        ? "yellow"
-        : "red";
+          ? "yellow"
+          : "red";
     return { borderColor: color };
   }
 
@@ -174,7 +174,7 @@ function downloadMeme(node) {
     .then((dataUrl) => {
       const elem = document.createElement("a");
       elem.setAttribute("href", dataUrl);
-      elem.setAttribute("download", "new_meme_image");
+      elem.setAttribute("download", "New_Meme");
       document.body.appendChild(elem);
       elem.click();
       elem.remove();
@@ -184,4 +184,4 @@ function downloadMeme(node) {
     });
 }
 
-function shareToTwitter() {}
+function uploadImage() { }
