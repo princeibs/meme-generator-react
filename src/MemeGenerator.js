@@ -67,15 +67,20 @@ export default function MemeGenerator() {
       length <= OK_LENGTH
         ? "green"
         : length <= WARNING_LENGTH
-          ? "yellow"
-          : "red";
+        ? "yellow"
+        : "red";
     return { borderColor: color };
   }
 
   function handleIconClick(e) {
     const name = e.target.name;
-    if (name === "download") downloadMeme("meme-node");
-  }
+    if (name === "download") {
+      downloadMeme("meme-node");
+    } else if (name === "upload") {
+      const url = uploadImage();
+      console.log(url);
+    }
+  }  
 
   return (
     <div className="content-body">
@@ -157,7 +162,7 @@ export default function MemeGenerator() {
           alt="Download image "
         />
         <img
-          name="shareToTwitter"
+          name="upload"
           onClick={handleIconClick}
           src={uploadIcon}
           alt="Upload image"
@@ -184,4 +189,10 @@ function downloadMeme(node) {
     });
 }
 
-function uploadImage() { }
+function uploadImage() {
+  const input = document.createElement("input");
+  input.type = "file";    
+  input.click();
+  const url = URL.createObjectURL(input.files[0])    
+  return url;
+}
