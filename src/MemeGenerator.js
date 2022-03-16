@@ -16,7 +16,7 @@ export default function MemeGenerator() {
     topText: "",
     bottomText: "",
     name: "Index Image",
-    url: "https://i.imgflip.com/30b1gx.jpg",
+    url: "https://i.imgflip.com/1tl71a.jpg",
   });
   React.useEffect(() => {
     async function getMemes() {
