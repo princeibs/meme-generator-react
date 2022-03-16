@@ -24,8 +24,8 @@ li {
 /* Header */
 
 .header img {
-  height: 50px;
-  width: 70px;
+  height: 60px;
+  width: 80px;
   border-radius: 5px;
   margin-right: 10px;
 }
@@ -43,7 +43,7 @@ li {
 }
 
 .header {
-  background: linear-gradient(to right, black, rgb(179, 137, 233));
+  background: linear-gradient(to right, black, rgb(42, 123, 15));
   color: white;
   padding: 10px;
 }
@@ -65,7 +65,7 @@ button {
   width: 40%;
   border: none;
   cursor: pointer;
-  background: linear-gradient(to right, rgb(16, 16, 44), rgb(179, 137, 233));
+  background: linear-gradient(to right, rgb(16, 16, 44), rgb(42, 123, 15));
 }
 
 button:hover {
@@ -172,14 +172,14 @@ button:disabled {
   appearance: none;
   width: 20px;
   height: 15px;
-  background: purple;
+  background: rgb(21, 128, 0);
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
   width: 20px;
   height: 15px;
-  background: purple;
+  background: rgb(36, 128, 0);
   cursor: pointer;
 }
 
@@ -202,6 +202,7 @@ button:disabled {
   text-align: end;
   border-radius: 5px;
   width: 130px;  
+  position: relative;
 }
 
 .icon-group img {
@@ -217,6 +218,15 @@ button:disabled {
 
 .icon-group:hover {
   box-shadow: 0 0 25px rgb(106, 104, 104);
+}
+
+input[class=input-img] {
+  height: 40px;  
+  width: 25px;
+  position: absolute;
+  top: 10px;
+  left: 72px;
+  opacity: 0;
 }
 
 @media screen and (max-width: 500px) {
@@ -260,7 +270,7 @@ button:disabled {
   }
 
   .header {
-    background: linear-gradient(to right, black, rgb(179, 137, 233));
+    background: linear-gradient(to right, black, rgb(42, 123, 15));
     color: white;
     padding: 10px 0;
   }

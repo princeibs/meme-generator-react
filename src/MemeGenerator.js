@@ -11,6 +11,7 @@ export default function MemeGenerator() {
   const [allMemeImages, setAllMemeImages] = useState([]);
   const [prevMemeImages, setPrevMemeImages] = useState([]);
   const [memeTextSize, setMemeTextSize] = useState(40);
+  const [selectedImage, setSelectedImage] = useState();
   const [meme, setMeme] = useState({
     topText: "",
     bottomText: "",
@@ -27,6 +28,7 @@ export default function MemeGenerator() {
   }, []);
 
   const getNewMeme = () => {
+    setSelectedImage();
     const randomId = Math.floor(Math.random() * allMemeImages.length);
     const url = allMemeImages[randomId].url;
     setPrevMemeImages((prevMemeImages) => [...prevMemeImages, meme]);
@@ -37,6 +39,7 @@ export default function MemeGenerator() {
   };
 
   function getPrevMeme() {
+    setSelectedImage();
     const prevMeme = prevMemeImages.pop();
     const url = prevMeme.url;
     setMeme((currentMeme) => ({
@@ -80,7 +83,13 @@ export default function MemeGenerator() {
       const url = uploadImage();
       console.log(url);
     }
-  }  
+  }
+
+  function uploadImage(e) {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);      
+    }
+  }
 
   return (
     <div className="content-body">
@@ -138,7 +147,10 @@ export default function MemeGenerator() {
         >
           {meme.bottomText}
         </div>
-        <img src={meme.url} alt={meme.name} />
+        <img
+          src={selectedImage ? URL.createObjectURL(selectedImage) : meme.url}
+          alt={meme.name}
+        />
       </div>
       <div className="controls">
         <div className="text-size">
@@ -167,6 +179,7 @@ export default function MemeGenerator() {
           src={uploadIcon}
           alt="Upload image"
         />
+        <input className="input-img" accept="image/*" type="file" onChange={uploadImage} />
       </div>
     </div>
   );
@@ -187,12 +200,4 @@ function downloadMeme(node) {
     .catch(function (error) {
       console.error("oops, something went wrong");
     });
-}
-
-function uploadImage() {
-  const input = document.createElement("input");
-  input.type = "file";    
-  input.click();
-  const url = URL.createObjectURL(input.files[0])    
-  return url;
 }
