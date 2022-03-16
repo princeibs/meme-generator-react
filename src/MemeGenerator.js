@@ -3,15 +3,18 @@ import uploadIcon from "./images/upload-image.png";
 import downloadIcon from "./images/download-icon.png";
 import * as htmlToImage from "html-to-image";
 
+// constants
 const TEXT_MAX_LENGTH = 72;
 const OK_LENGTH = 30;
 const WARNING_LENGTH = 50;
 
 export default function MemeGenerator() {
-  const [allMemeImages, setAllMemeImages] = useState([]);
-  const [prevMemeImages, setPrevMemeImages] = useState([]);
-  const [memeTextSize, setMemeTextSize] = useState(40);
-  const [selectedImage, setSelectedImage] = useState();
+  // state variables
+  const [allMemeImages, setAllMemeImages] = useState([]); // set all meme images
+  const [prevMemeImages, setPrevMemeImages] = useState([]); // set all previously viewed meme images
+  const [memeTextSize, setMemeTextSize] = useState(40); // set meme text size
+  const [selectedImage, setSelectedImage] = useState(); // set the selected image uploaded from file system
+  // set meme object
   const [meme, setMeme] = useState({
     topText: "",
     bottomText: "",
@@ -19,16 +22,20 @@ export default function MemeGenerator() {
     url: "https://i.imgflip.com/1tl71a.jpg",
   });
   React.useEffect(() => {
+    // Get meme data from API and set in state variable
     async function getMemes() {
       const response = await fetch("https://api.imgflip.com/get_memes");
       const data = await response.json();
       setAllMemeImages(data.data.memes);
     }
-    getMemes();
+    // invoke async function
+    /* This will enable the async function finish loading before executing */
+    getMemes(); 
   }, []);
 
+  // Get a new random meme image and store in state variable
   const getNewMeme = () => {
-    setSelectedImage();
+    setSelectedImage(); // clear previous selected image selected from file system
     const randomId = Math.floor(Math.random() * allMemeImages.length);
     const url = allMemeImages[randomId].url;
     setPrevMemeImages((prevMemeImages) => [...prevMemeImages, meme]);
@@ -38,8 +45,9 @@ export default function MemeGenerator() {
     }));
   };
 
+  // View previous meme image
   function getPrevMeme() {
-    setSelectedImage();
+    setSelectedImage(); // clear previous selected image selected from file system
     const prevMeme = prevMemeImages.pop();
     const url = prevMeme.url;
     setMeme((currentMeme) => ({
@@ -48,7 +56,8 @@ export default function MemeGenerator() {
     }));
   }
 
-  function handleChange(event) {
+  // Changes meme text
+  function handleMemeTextChange(event) {
     const { name, value } = event.target;
     if (value.length <= TEXT_MAX_LENGTH) {
       setMeme((prevMeme) => {
@@ -60,11 +69,13 @@ export default function MemeGenerator() {
     }
   }
 
+  // Changes meme text size
   function handleChangeTextSize(event) {
     const memeTextSize = event.target.value;
     setMemeTextSize(parseInt(memeTextSize));
   }
 
+  // Handle styling applied to counter text
   function topTextCountStyle(length) {
     const color =
       length <= OK_LENGTH
@@ -75,16 +86,15 @@ export default function MemeGenerator() {
     return { borderColor: color };
   }
 
+  // Initialize meme image download
   function handleIconClick(e) {
     const name = e.target.name;
     if (name === "download") {
       downloadMeme("meme-node");
-    } else if (name === "upload") {
-      const url = uploadImage();
-      console.log(url);
     }
   }
 
+  // Upload new image
   function uploadImage(e) {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);      
@@ -98,7 +108,7 @@ export default function MemeGenerator() {
           <input
             name="topText"
             value={meme.topText}
-            onChange={handleChange}
+            onChange={handleMemeTextChange}
             type="text"
             placeholder="Top text"
           />
@@ -113,7 +123,7 @@ export default function MemeGenerator() {
           <input
             name="bottomText"
             value={meme.bottomText}
-            onChange={handleChange}
+            onChange={handleMemeTextChange}
             type="text"
             placeholder="Bottom text"
           />
@@ -171,11 +181,10 @@ export default function MemeGenerator() {
           name="download"
           onClick={handleIconClick}
           src={downloadIcon}
-          alt="Download image "
+          alt="Download image"
         />
         <img
-          name="upload"
-          onClick={handleIconClick}
+          name="upload"      
           src={uploadIcon}
           alt="Upload image"
         />
@@ -185,6 +194,7 @@ export default function MemeGenerator() {
   );
 }
 
+// Download meme image
 function downloadMeme(node) {
   const targetNode = document.getElementById(node);
   htmlToImage
