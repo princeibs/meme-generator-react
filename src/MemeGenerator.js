@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import uploadIcon from "./icons/upload-image.png";
-import downloadIcon from "./icons/download-icon.png";
+import uploadIcon from "./images/upload-image.png";
+import downloadIcon from "./images/download-icon.png";
 import * as htmlToImage from "html-to-image";
 
 const TEXT_MAX_LENGTH = 72;
