@@ -108,6 +108,7 @@ button img {
 
 .meme-img {
   position: relative;
+  text-align: center;
 }
 
 .meme-img img {
@@ -123,11 +124,13 @@ button img {
 .meme-text {
   font-family: fantasy;
   text-shadow: 20 20 20;
-  margin-left: 10px;
+  position: absolute;  
+  left: 50%;  
+  transform: translate(-50%, 0%);
+  text-align: center;
   font-size: 3em;
   font-weight: 900;
   color: white;
-  position: absolute;
   text-shadow: 0 0 10px black;
 }
 
