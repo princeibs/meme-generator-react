@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Checkout a live demo of the app -> [here](https://princeibs.github.io/meme-generator-react/)
+> Checkout a live demo of the app -> [here](https://princeibs.github.io/meme-generator-react/)
 
 ### Preview
 
